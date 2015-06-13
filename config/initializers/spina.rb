@@ -1,0 +1,3 @@
+Spina::Engine.configure do
+  config.NEGATIVE_CAPTCHA_SECRET = '5c6d7814e0f2dbd12faa9eaaa0d2dfe7bea97921000069ed08600ba211c3b76b534ff208b2604470ef7dd4c8da7e87fa01671a8bb3ef09e726cecc51dfc0df6b'
+end

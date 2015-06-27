@@ -1,28 +1,48 @@
-set :stage, :production
+# config valid only for current version of Capistrano
+lock '3.4.0'
+
+# Application
+# ===========
+set :application, 'rails-devise-capistrano'
+set :deploy_to, '/var/www/rails-devise-capistrano'
+# set :rails_env, "production"
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :rbenv_ruby, File.read('.ruby-version').strip
+
+# Hosts
+# ===========
+role :web, "localhost" 
+# role :app, %w{example.com}
+# role :db,  %w{example.com}
+
+# Git
+# ===
+set :scm, :git
 set :branch, "master"
+set :deploy_via, :export
+set :repo_url, 'git@github.com:abrambailey/rails-devise-capistrano.git'
 
-# This is used in the Nginx VirtualHost to specify which domains
-# the app should appear on. If you don't yet have DNS setup, you'll
-# need to create entries in your local Hosts file for testing.
-set :server_name, "www.example.com example.com"
+# SSH
+# ===
+set :ssh_options, {user: 'vagrant', port: 2222, keys: ['~/.vagrant.d/insecure_private_key']}
 
-# used in case we're deploying multiple versions of the same
-# app side by side. Also provides quick sanity checks when looking
-# at filepaths
-set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
+# Capistrano
+# ==========
+set :format, :pretty
+set :log_level, :debug
+set :keep_releases, 7
 
-server 'example.com', user: 'deploy', roles: %w{web app db}, primary: true
 
-set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
+namespace :deploy do
 
-# dont try and infer something as important as environment from
-# stage name.
-set :rails_env, :production
+  desc "Restart application"
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute :touch, release_path.join("tmp/restart.txt")
+    end
+  end
 
-# number of unicorn workers, this will be reflected in
-# the unicorn.rb and the monit configs
-set :unicorn_worker_count, 5
+  after :finishing, "deploy:cleanup"
 
-# whether we're using ssl or not, used for building nginx
-# config file
-set :enable_ssl, false
+end

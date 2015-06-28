@@ -6,8 +6,9 @@ lock '3.4.0'
 set :application, 'rails-devise-capistrano'
 set :deploy_to, '/var/www/rails-devise-capistrano'
 # set :rails_env, "production"
-# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
 set :rbenv_ruby, File.read('.ruby-version').strip
 
 # Hosts

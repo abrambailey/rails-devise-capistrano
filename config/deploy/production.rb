@@ -35,9 +35,9 @@ set :keep_releases, 7
 
 
 task :setup_db do
-  execute "ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
-  execute "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-  execute "ln -fs #{shared_path}/uploads #{release_path}/uploads"
+  execute :ln, "-nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
+  execute :ln, "-nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  execute :ln, "-fs #{shared_path}/uploads #{release_path}/uploads"
 end
 
 before "deploy:assets:precompile", :setup_db

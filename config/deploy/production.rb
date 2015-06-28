@@ -34,16 +34,16 @@ set :log_level, :debug
 set :keep_releases, 7
 
 
-namespace :deploy do
+before "deploy:assets:precompile" do
+  run [
+        "touch #{shared_path}/config/database.yml",
+        "ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml",
+        "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml",
+        "ln -fs #{shared_path}/uploads #{release_path}/uploads"
+  ].join(" && ")
+end
 
-  before "deploy:assets:precompile" do
-    run [
-          "touch #{shared_path}/config/database.yml",
-          "ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml",
-          "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml",
-          "ln -fs #{shared_path}/uploads #{release_path}/uploads"
-    ].join(" && ")
-  end
+namespace :deploy do
 
   desc "Restart application"
   task :restart do

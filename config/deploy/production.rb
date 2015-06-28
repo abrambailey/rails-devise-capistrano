@@ -34,22 +34,21 @@ set :log_level, :debug
 set :keep_releases, 7
 
 
-before "deploy:assets:precompile" do
+task :setup_db do
   run [ "ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml",
         "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml",
         "ln -fs #{shared_path}/uploads #{release_path}/uploads"
   ].join(" && ")
 end
 
-namespace :deploy do
+before "deploy:assets:precompile", :setup_db
 
+namespace :deploy do
   desc "Restart application"
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, release_path.join("tmp/restart.txt")
     end
   end
-
   after :finishing, "deploy:cleanup"
-
 end

@@ -37,10 +37,10 @@ role :admin, "vagrant@localhost"
 
 task :setup_db do
   on roles(:admin) do
-    execute :touch, "#{release_path}/config/database.yml"
-    execute :ln, "-nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
-    execute :ln, "-nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    execute :ln, "-fs #{shared_path}/uploads #{release_path}/uploads"
+    #execute :touch, "#{release_path}/config/database.yml"
+    # execute :ln, "-nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
+    # execute :ln, "-nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    # execute :ln, "-fs #{shared_path}/uploads #{release_path}/uploads"
   end
 end
 

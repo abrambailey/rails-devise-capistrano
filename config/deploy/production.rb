@@ -33,18 +33,18 @@ set :format, :pretty
 set :log_level, :debug
 set :keep_releases, 7
 
-role :admin, "vagrant@localhost"
+# role :admin, "vagrant@localhost"
 
-task :setup_db do
-  on roles(:admin) do
-    #execute :touch, "#{release_path}/config/database.yml"
-    # execute :ln, "-nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
-    # execute :ln, "-nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    # execute :ln, "-fs #{shared_path}/uploads #{release_path}/uploads"
-  end
-end
+# task :setup_db do
+#   on roles(:admin) do
+#     execute :touch, "#{release_path}/config/database.yml"
+#     execute :ln, "-nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
+#     execute :ln, "-nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+#     execute :ln, "-fs #{shared_path}/uploads #{release_path}/uploads"
+#   end
+# end
 
-before "deploy:assets:precompile", :setup_db
+# before "deploy:assets:precompile", :setup_db
 
 namespace :deploy do
   desc "Restart application"

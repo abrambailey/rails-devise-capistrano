@@ -9,13 +9,14 @@ lock '3.4.0'
 # ===========
 set :application, 'rails-devise-capistrano'
 set :deploy_to, '/var/www/rails-devise-capistrano'
-# set :linked_files, %w{config/database.yml}
-#set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 set :rbenv_ruby, File.read('.ruby-version').strip
+set :bundle_env_variables, { 'NOKOGIRI_USE_SYSTEM_LIBRARIES' => 1 }
 
 # Hosts
 # ===========
-role :web, "localhost" 
+# role :web, "localhost" 
 
 # Git
 # ===
@@ -34,15 +35,13 @@ set :format, :pretty
 set :log_level, :debug
 set :keep_releases, 7
 
-role :admin, "vagrant@localhost"
-
-task :setup_db do
-  on roles(:admin) do
-    execute :ln, "-nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
-    execute :ln, "-nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    execute :ln, "-fs #{shared_path}/uploads #{release_path}/uploads"
-  end
-end
+# task :setup_db do
+#   on roles(:admin) do
+#     execute :ln, "-nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
+#     execute :ln, "-nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+#     execute :ln, "-fs #{shared_path}/uploads #{release_path}/uploads"
+#   end
+# end
 
 before "deploy:assets:precompile", :setup_db
 

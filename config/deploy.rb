@@ -1,12 +1,16 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
+# vagrant plugin install vagrant-scp
+# vagrant scp "~/rails_projects/rails-devise/sync" "/var/www/rails-devise-capistrano/shared/" [vm_name]
+
+
 # Application
 # ===========
 set :application, 'rails-devise-capistrano'
 set :deploy_to, '/var/www/rails-devise-capistrano'
-set :linked_files, %w{config/database.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+# set :linked_files, %w{config/database.yml}
+#set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 set :rbenv_ruby, File.read('.ruby-version').strip
 
 # Hosts

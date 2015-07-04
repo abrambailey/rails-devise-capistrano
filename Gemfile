@@ -25,6 +25,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rbenv', "~> 2.0" 
   gem 'capistrano-safe-deploy-to', '~> 1.1.1'
+  gem 'capistrano-passenger'
 end
 group :development, :test do
   gem 'factory_girl_rails'

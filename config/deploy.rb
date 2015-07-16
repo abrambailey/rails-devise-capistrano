@@ -5,7 +5,7 @@ lock '3.4.0'
 # ===========
 set :application, 'rails-devise-capistrano'
 set :deploy_to, '/var/www/rails-devise-capistrano'
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 set :rbenv_ruby, File.read('.ruby-version').strip
 # set :bundle_env_variables, { nokogiri_use_system_libraries: 1 }
